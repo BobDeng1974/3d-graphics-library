@@ -1,7 +1,20 @@
 #include <math.h>
 #include "3d.h"
 
-/* convert quaternion to rotation matrix */
+inline float det(Vector v1, Vector v2, Vector norm) {
+  return ((v1.pos[0] * v2.pos[1] * norm.pos[2]) +
+          (v1.pos[1] * v2.pos[2] * norm.pos[0]) +
+          (v1.pos[2] * v2.pos[0] * norm.pos[1]) -
+          (v1.pos[0] * v2.pos[2] * norm.pos[1]) -
+          (v1.pos[1] * v2.pos[0] * norm.pos[2]) -
+          (v1.pos[2] * v2.pos[1] * norm.pos[0]));
+}
+
+inline float dot(Vector v1, Vector v2) {
+  return (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
+}
+
+/* Convert quaternion to rotation matrix */
 void generate_quater_matrix(Vector rotate_vec, float d_degree,
                             Matrix rotate_mat) {
   float w = cos(d_degree / 2.0f);
@@ -22,7 +35,7 @@ void generate_quater_matrix(Vector rotate_vec, float d_degree,
   rotate_mat[15] = 1.0f;
 }
 
-/* rotate vector is perpendicular to the plane where cur_vec and tan_vec stay */
+/* Rotate vector is perpendicular to the plane where cur_vec and tan_vec stay */
 void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
   rotate_vec->pos[0] =
       cur_vec.pos[1] * tan_vec.pos[2] - cur_vec.pos[2] * tan_vec.pos[1];
@@ -30,4 +43,14 @@ void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
       cur_vec.pos[2] * tan_vec.pos[0] - cur_vec.pos[0] * tan_vec.pos[2];
   rotate_vec->pos[2] =
       cur_vec.pos[0] * tan_vec.pos[1] - cur_vec.pos[1] * tan_vec.pos[0];
+}
+
+/* Calculate angle between vector v1 and vector v2. Return float (-PI, PI]
+ * Reference:
+ * https://stackoverflow.com/questions/14066933/direct-way-of-computing-clockwise-angle-between-2-vectors
+ */
+float cal_angle(Vector vec1, Vector vec2, Vector rotate_vec) {
+  float dot = dot(vec1, vec2);
+  float det = det(vec1, vec2, rotate_vec);
+  return atan2(det, dot);
 }
