@@ -23,7 +23,7 @@ void generate_quater_matrix(Vector rotate_vec, float d_degree,
 }
 
 /* rotate vector is perpendicular to the plane where cur_vec and tan_vec stay */
-void generate_rotate_vec(Point cur_vec, Point tan_vec, Vector *rotate_vec) {
+void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
   rotate_vec->pos[0] =
       cur_vec.pos[1] * tan_vec.pos[2] - cur_vec.pos[2] * tan_vec.pos[1];
   rotate_vec->pos[1] =

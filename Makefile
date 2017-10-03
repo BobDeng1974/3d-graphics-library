@@ -1,4 +1,4 @@
-CC = g++
+CXX = g++
 DEBUG = -g -D DEBUG
 TARGET = ./build/main
 SRCS = line.cpp matrix.cpp test/test3d.cpp
@@ -8,7 +8,7 @@ MAIN = 3d
 
 all: $(MAIN)
 $(MAIN): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
+	$(CXX) $(CFLAGS) $(SRCS) -o $(TARGET)
 
 clean:
 	$(RM) *.o $(TARGET)
