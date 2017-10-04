@@ -42,7 +42,7 @@ void generate_quater_matrix(Vector rotate_vec, float d_degree,
 
 /* Rotate unit vector is perpendicular to the plane where cur_vec and tan_vec
  * stay */
-void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
+bool generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
   rotate_vec->pos[0] =
       cur_vec.pos[1] * tan_vec.pos[2] - cur_vec.pos[2] * tan_vec.pos[1];
   rotate_vec->pos[1] =
@@ -50,9 +50,21 @@ void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec) {
   rotate_vec->pos[2] =
       cur_vec.pos[0] * tan_vec.pos[1] - cur_vec.pos[1] * tan_vec.pos[0];
   float f_mod = mod(*rotate_vec);
+  if (f_mod - 0.0f < 1e-6) return false;
   rotate_vec->pos[0] /= f_mod;
   rotate_vec->pos[1] /= f_mod;
   rotate_vec->pos[2] /= f_mod;
+  return true;
+}
+
+/* If angle between current normal vector and previous one greater than 180,
+    reverse it */
+void generate_normal_vec(Vector prev_vec, Vector *cur_vec) {
+  if (dot(prev_vec, *cur_vec) < 0.0f) {
+    cur_vec->pos[0] = -cur_vec->pos[0];
+    cur_vec->pos[1] = -cur_vec->pos[1];
+    cur_vec->pos[2] = -cur_vec->pos[2];
+  }
 }
 
 /* Calculate angle between vector v1 and vector v2. Return float (-PI, PI]
