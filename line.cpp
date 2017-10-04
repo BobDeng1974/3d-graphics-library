@@ -2,12 +2,11 @@
 #include "3d.h"
 
 /* Catmull-Rom line */
-void generate_cr_line(Point *p_points, int n_len,
-                      Point *p_tan_points, int n_tan_len,
+void generate_cr_line(Point *p_points, Point *p_tan_points,
                       Point *p_control_points, int n_clen, int n_frame) {
   int index = 0;
   for (int c_ix = 0; c_ix < n_clen - 3; ++c_ix) {
-    for (int i = 0; i < n_len; ++i) {
+    for (int i = 0; i < n_frame; ++i) {
       float u = (float)i * 1.0 / n_frame;
       float u_2 = u * u;
       float u_3 = u_2 * u;

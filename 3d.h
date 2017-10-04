@@ -20,13 +20,14 @@ static inline void init_point(float x, float y, float z, Point *p) {
   p->pos[2] = z;
 }
 
-void generate_cr_line(Point *p_points, int n_len, Point *p_tan_points,
-                      int n_tan_len, Point *p_control_points, int n_clen,
-                      int n_frame);
+void generate_cr_line(Point *p_points, Point *p_tan_points,
+                      Point *p_control_points, int n_clen, int n_frame);
 
 void generate_quater_matrix(Vector rotate_vec, float d_degree,
                             Matrix rotate_mat);
 
 void generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec);
+
+float cal_angle(Vector vec1, Vector vec2, Vector rotate_vec);
 
 #endif
