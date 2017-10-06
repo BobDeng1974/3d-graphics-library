@@ -25,8 +25,9 @@ int cnt = 0;
 //================================
 // init
 //================================
-Point *p_points, *p_tan_points;
+Point *p_points, *p_tan_points, *p_curve_points;
 Vector prev_tan, prev_normal, XN, YN, ZN;
+Matrix cur_mat = new float[16];
 
 float ORG[3] = {0, 0, 0};
 
@@ -56,53 +57,47 @@ void draw_axes(void) {
 
 void draw_teapot(void) {
     glPushMatrix();
+
+    if (cnt == 0) {
+        init_point(1, 0, 0, &prev_tan);
+        init_point(0, 1, 0, &prev_normal);
+        for (int i = 0; i < 16; ++i) cur_mat[i] = IDENTITY_MAT[i];
+    }
+
     glTranslatef(p_points[cnt].pos[0], p_points[cnt].pos[1],
                  p_points[cnt].pos[2]);
 
-    Vector rotate_vec_x, rotate_vec_z;
-    if (!generate_rotate_vec(XN, p_tan_points[cnt], &rotate_vec_x))
-        rotate_vec_x = prev_normal;
-    /*
-    for (int i = 0; i < 16; ++ i) {
-            if ((i + 1) % 4 == 0) printf("%f\n", mat[i]);
-            else printf("%f ", mat[i]);
-    }
-    */
+    Vector nxt_norm;
+    gen_rotate_vec(p_tan_points[cnt], p_curve_points[cnt], &nxt_norm);
 
     /* show tan line */
     glLineWidth(2.0);
     glBegin(GL_LINES);
-    glColor3f(1, 0, 1);
+    glColor3f(0, 1, 1);
     glVertex3fv(ORG);
     glVertex3fv(p_tan_points[cnt].pos);
-    glColor3f(1, 1, 0);
+    glColor3f(1, 0, 1);
     glVertex3fv(ORG);
-    glVertex3fv(rotate_vec_x.pos);
+    glVertex3fv(nxt_norm.pos);
     glEnd();
     /* end */
 
-    cnt = (cnt + 1) % ((ctrl_len - 3) * n_frame);
-    /* rotate x norm to tangent */
-    float mat[16];
-    float angle = cal_angle(XN, p_tan_points[cnt], rotate_vec_x);
-    // printf("%f %f %f\n", prev_tan.pos[0], prev_tan.pos[1], prev_tan.pos[2]);
-    // printf("%f\n", angle);
-    generate_quater_matrix(rotate_vec_x, angle, mat);
-    glMultMatrixf((GLfloat*)mat);
+    // printf("%f %f %f \n", prev_normal.pos[0], prev_normal.pos[1],
+    // prev_normal.pos[2]);
+    Matrix m1 = new float[16];
+    Matrix m2 = new float[16];
+    /* cal matrix */
+    gen_transform_matrix(XN, p_tan_points[cnt], p_curve_points[cnt], ZN, m1,
+                         m2);
+    // glMultMatrixf(cur_mat);
+    glMultMatrixf(m2);
+    // glMultMatrixf(m1);
+    // gen_4mul_mat(cur_mat, m1);
 
-    /* rotate z norm to rotate_vect_x */
-    generate_normal_vec(prev_normal, &rotate_vec_x);
-    // printf("%f %f %f\n", rotate_vec_x.pos[0], rotate_vec_x.pos[1],
-    // rotate_vec_x.pos[2]);
-    generate_rotate_vec(YN, rotate_vec_x, &rotate_vec_z);
-    // printf("%f %f %f\n", rotate_vec_z.pos[0], rotate_vec_z.pos[1],
-    // rotate_vec_z.pos[2]);
-    angle = cal_angle(YN, rotate_vec_x, rotate_vec_z);
-    // printf("%f\n", angle);
-    generate_quater_matrix(rotate_vec_z, angle, mat);
-    glMultMatrixf((GLfloat*)&mat);
-    init_point_p(rotate_vec_x, &prev_normal);
-    // render objects
+    /* next frame */
+    // init_point_p(p_tan_points[cnt], &prev_tan);
+    cnt += 1;
+    cnt %= (ctrl_len - 3) * n_frame;
 
     // render state
     glEnable(GL_DEPTH_TEST);
@@ -178,26 +173,31 @@ void init(void) {
     // init something before main loop...
     p_points = new Point[(ctrl_len - 3) * n_frame];
     p_tan_points = new Point[(ctrl_len - 3) * n_frame];
+    p_curve_points = new Point[(ctrl_len - 3) * n_frame];
+
     Point* p_cpoints = new Point[12];
-    init_point(0, 0, 0, &p_cpoints[0]);
-    init_point(1, 1, 2, &p_cpoints[1]);
-    init_point(1, 3, 3, &p_cpoints[2]);
-    init_point(2, 2, 4, &p_cpoints[3]);
-    init_point(5, 3, 5, &p_cpoints[4]);
-    init_point(6, 2, 6, &p_cpoints[5]);
-    init_point(4, -1, 5, &p_cpoints[6]);
-    init_point(3, 8, 6, &p_cpoints[7]);
-    init_point(-2, 13, 4, &p_cpoints[8]);
-    init_point(5, 12, 4, &p_cpoints[9]);
-    init_point(4, 12, 3, &p_cpoints[10]);
-    init_point(7, 11, 0, &p_cpoints[11]);
+    init_point(0, 0, 3, &p_cpoints[0]);
+    init_point(-2, 3, 3, &p_cpoints[1]);
+    init_point(-4, 5, 3, &p_cpoints[2]);
+    init_point(-5, 6, 2, &p_cpoints[3]);
+    init_point(-7, 6, 1, &p_cpoints[4]);
+    init_point(-5, 7, 1, &p_cpoints[5]);
+    init_point(-3, 7, 1, &p_cpoints[6]);
+    init_point(2, 9, 1, &p_cpoints[7]);
+    init_point(1, 7, 2, &p_cpoints[8]);
+    init_point(4, 3, 2, &p_cpoints[9]);
+    init_point(7, 4, 3, &p_cpoints[10]);
+    init_point(9, 9, 3, &p_cpoints[11]);
 
     init_point(1, 0, 0, &prev_tan);
     init_point(0, 0, 1, &prev_normal);
     init_point(1, 0, 0, &XN);
     init_point(0, 1, 0, &YN);
     init_point(0, 0, 1, &ZN);
-    generate_cr_line(p_points, p_tan_points, p_cpoints, ctrl_len, n_frame);
+
+    for (int i = 0; i < 16; ++i) cur_mat[i] = IDENTITY_MAT[i];
+    gen_cr_line(p_points, p_tan_points, p_curve_points, p_cpoints, ctrl_len,
+                n_frame);
 }
 
 //================================
