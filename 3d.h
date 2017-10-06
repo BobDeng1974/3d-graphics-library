@@ -6,7 +6,7 @@
 #define PI atan(1) * 4
 
 struct _point {
-  float pos[4];
+    float pos[4];
 };
 
 typedef struct _point Point;
@@ -15,27 +15,19 @@ typedef struct _point Vector;
 typedef float *Matrix;
 
 static inline void init_point(float x, float y, float z, Point *p) {
-  p->pos[0] = x;
-  p->pos[1] = y;
-  p->pos[2] = z;
+    p->pos[0] = x;
+    p->pos[1] = y;
+    p->pos[2] = z;
 }
 
 static inline void init_point_p(Point t, Point *p) {
-  p->pos[0] = t.pos[0];
-  p->pos[1] = t.pos[1];
-  p->pos[2] = t.pos[2];
+    p->pos[0] = t.pos[0];
+    p->pos[1] = t.pos[1];
+    p->pos[2] = t.pos[2];
 }
 
-void generate_cr_line(Point *p_points, Point *p_tan_points,
-                      Point *p_control_points, int n_clen, int n_frame);
-
-void generate_quater_matrix(Vector rotate_vec, float d_degree,
-                            Matrix rotate_mat);
-
-bool generate_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec);
-
-float cal_angle(Vector vec1, Vector vec2, Vector rotate_vec);
-
-void generate_normal_vec(Vector prev_vec, Vector *cur_vec);
+void gen_transform_matrix(Point cur_tan, Point nxt_tan, Point nxt_curve,
+                          Point *cur_norm, Matrix result);
+void gen_rotate_matrix(Vector frm_vec, Vector to_vec, Matrix result);
 
 #endif
