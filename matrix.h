@@ -5,7 +5,9 @@
 double IDENTITY_MAT[16] = {1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
                            0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 
-void gen_quater_matrix(Vector rotate_vec, float d_degree, Matrix rotate_mat);
+void gen_quater_matrix(Vector rotate_vec, float f_angle, Matrix rotate_mat);
+
+void gen_euler_matrix(Vector rotate_vec, float f_angle, Matrix rotate_mat);
 
 bool gen_rotate_vec(Vector cur_vec, Vector tan_vec, Vector *rotate_vec);
 

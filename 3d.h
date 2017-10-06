@@ -5,6 +5,14 @@
 
 #define PI atan(1) * 4
 
+/* line type */
+#define L_CATMULL 0
+#define L_BSPLINE 1
+
+/* rotate type */
+#define R_QUART 0
+#define R_EULER 1
+
 struct _point {
     float pos[4];
 };
@@ -26,8 +34,8 @@ static inline void init_point_p(Point t, Point *p) {
     p->pos[2] = t.pos[2];
 }
 
-void gen_transform_matrix(Point cur_tan, Point nxt_tan, Point nxt_curve,
-                          Point *cur_norm, Matrix result);
-void gen_rotate_matrix(Vector frm_vec, Vector to_vec, Matrix result);
+void gen_transform_matrix(Point cur_tan, Point nxt_tan, Point nxt_curve, Point cur_norm, Matrix result, const int rotate_type);
+                          
+void gen_rotate_matrix(Vector frm_vec, Vector to_vec, Matrix result, const int rotate_type);
 
 #endif
