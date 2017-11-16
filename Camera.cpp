@@ -2,7 +2,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include "Camera.h"
 
-const static float STEP_SCALE = 0.5f;
+const static float STEP_SCALE = 0.1f;
 const static float EDGE_STEP = 0.1f;
 const static int MARGIN = 10;
 
@@ -75,21 +75,21 @@ bool Camera::OnKeyboard(OGLDEV_KEY Key)
 
 	switch (Key) {
 
-	case OGLDEV_KEY_UP:
+	case OGLDEV_KEY_w:
 	{
 		m_pos += (m_target * STEP_SCALE);
 		Ret = true;
 	}
 	break;
 
-	case OGLDEV_KEY_DOWN:
+	case OGLDEV_KEY_s:
 	{
 		m_pos -= (m_target * STEP_SCALE);
 		Ret = true;
 	}
 	break;
 
-	case OGLDEV_KEY_LEFT:
+	case OGLDEV_KEY_a:
 	{
 		glm::vec3 Left = glm::normalize(glm::cross(m_target, m_up));
 		Left *= STEP_SCALE;
@@ -98,7 +98,7 @@ bool Camera::OnKeyboard(OGLDEV_KEY Key)
 	}
 	break;
 
-	case OGLDEV_KEY_RIGHT:
+	case OGLDEV_KEY_d:
 	{
 		glm::vec3 Right = glm::normalize(glm::cross(m_up, m_target));
 		Right *= STEP_SCALE;

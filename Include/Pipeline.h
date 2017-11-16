@@ -22,14 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Camera.h"
 
-struct PersProjInfo
-{
-	float FOV;
-	float Width;
-	float Height;
-	float zNear;
-	float zFar;
-};
+
 
 class Pipeline
 {
@@ -66,7 +59,7 @@ public:
 		m_worldPos.z = z;
 	}
 
-	void WorldPos(const glm::vec3&& Pos)
+	void WorldPos(const glm::vec3& Pos)
 	{
 		m_worldPos = Pos;
 	}

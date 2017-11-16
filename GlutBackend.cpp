@@ -74,16 +74,17 @@ OGLDEV_KEY GLUTKeyToOGLDEVKey(uint Key)
 
 
 static OGLDEV_MOUSE GLUTMouseToOGLDEVMouse(uint Button)
-{
-	switch (Button) {
+{ 
+	switch (Button) { 
 	case GLUT_LEFT_BUTTON:
 		return OGLDEV_MOUSE_BUTTON_LEFT;
 	case GLUT_RIGHT_BUTTON:
-		return OGLDEV_MOUSE_BUTTON_RIGHT;
+		return OGLDEV_MOUSE_BUTTON_RIGHT; 
 	case GLUT_MIDDLE_BUTTON:
 		return OGLDEV_MOUSE_BUTTON_MIDDLE;
 	default:
-		OGLDEV_ERROR0("Unimplemented GLUT mouse button");
+		//OGLDEV_ERROR0("Unimplemented GLUT mouse button");
+		printf("Unimplemented GLUT mouse button\n");
 	}
 
 	return OGLDEV_MOUSE_UNDEFINED;
@@ -139,7 +140,7 @@ static void MouseCB(int Button, int State, int x, int y)
 	OGLDEV_MOUSE OgldevMouse = GLUTMouseToOGLDEVMouse(Button);
 	OGLDEV_KEY_STATE OgldevKeyState = (State == GLUT_DOWN) ? OGLDEV_KEY_STATE_PRESS : OGLDEV_KEY_STATE_RELEASE;
 
-	s_pCallbacks->MouseCB(OgldevMouse, OgldevKeyState, x, y);
+	s_pCallbacks->MouseCB(OgldevMouse, OgldevKeyState, x, y); 
 }
 
 

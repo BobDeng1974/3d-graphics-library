@@ -4,6 +4,15 @@
 #include <glm/glm.hpp>
 #include "Key.h"
 
+struct PersProjInfo
+{
+	float FOV;
+	float Width;
+	float Height;
+	float zNear;
+	float zFar;
+};
+
 class Camera
 {
 public:
