@@ -56,7 +56,7 @@ alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
 
 ## Acknowledge
 
-* Aazing tutorials [ogldev](http://ogldev.atspace.co.uk)
+* Amazing tutorials [ogldev](http://ogldev.atspace.co.uk)
 
 * Really good videos by [ThinMatrix](https://www.youtube.com/user/ThinMatrix) for starters to learn OpengGL 
 
