@@ -2,16 +2,23 @@
 #include "Pipeline.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 
 const glm::mat4& Pipeline::GetWorldTrans() {
 	glm::mat4 ScaleTrans(1.0), RotateTrans(1.0), TranslationTrans(1.0);
 
 	ScaleTrans = glm::scale(ScaleTrans, m_scale);
+	
+	// Euler
+	//RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.x), glm::vec3(1, 0, 0));
+	//RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.y), glm::vec3(0, 1, 0));
+	//RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.z), glm::vec3(0, 0, 1));
 
-	RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.x), glm::vec3(1, 0, 0));
-	RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.y), glm::vec3(0, 1, 0));
-	RotateTrans = glm::rotate(RotateTrans, glm::radians(m_rotateInfo.z), glm::vec3(0, 0, 1));
+	// Quaternion
+	glm::quat quaternion = glm::quat(m_rotateInfo);
+	RotateTrans = glm::toMat4(quaternion);
 
 	TranslationTrans = glm::translate(m_worldPos);
 
