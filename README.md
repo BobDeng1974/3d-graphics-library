@@ -5,6 +5,7 @@ The 3D library contains some new functions besides basic techniques light, shado
  * Basic Key-Framing Motion
  * Hierarchical Object Motion
  * Physics Engine
+ * Reynolds Flock
  * Maybe more!
 
 ## Getting Started
@@ -22,7 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-I am working it to run it on both Windows and Linux like using CMake. Now, however, it can only build in Visual Studio in Windows.
+I am working it to run it on both Windows and Linux like using CMake. Now, however, it can only be built in Visual Studio in Windows.
 
 
 ## Demo
@@ -51,6 +52,14 @@ Welcome to physics world!
 " target="_blank"><img src="https://img.youtube.com/vi/5PaMIvX0Bng/0.jpg" 
 alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
 
+### Reynolds Flock
+
+Using the flock algorithm by [Craig Reynolds](https://www.red3d.com/cwr/boids/).
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=eenPqgRb59M
+" target="_blank"><img src="https://img.youtube.com/vi/eenPqgRb59M/0.jpg" 
+alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
+
 
 
 
@@ -58,8 +67,8 @@ alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
 
 * Amazing tutorials [ogldev](http://ogldev.atspace.co.uk)
 
-* Really good videos by [ThinMatrix](https://www.youtube.com/user/ThinMatrix) for starters to learn OpengGL 
+* Really good videos by [ThinMatrix](https://www.youtube.com/user/ThinMatrix) for starters to learn OpenGL 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
