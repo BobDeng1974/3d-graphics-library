@@ -60,6 +60,13 @@ Using the flock algorithm by [Craig Reynolds](https://www.red3d.com/cwr/boids/).
 " target="_blank"><img src="https://img.youtube.com/vi/eenPqgRb59M/0.jpg" 
 alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
 
+### Airplane Simulator
+
+How about some aerodynamics?
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=t5UHVqV5qtw
+" target="_blank"><img src="https://img.youtube.com/vi/t5UHVqV5qtw/0.jpg" 
+alt="Hierarchical Object Motion" width="240" height="180" border="10" /></a>
 
 
 
